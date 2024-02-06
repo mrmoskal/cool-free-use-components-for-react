@@ -1,0 +1,153 @@
+:root {
+  --clock-effect-container-diameter: 50vmin; /* default size of colck */
+  --clock-border-redius: calc(var(--clock-effect-container-diameter) / 4.75);
+  --clock-font-size: calc(var(--clock-effect-container-diameter) / 13.5);
+  --clock-daytime-font-color: black;
+  --clock-nightime-font-color: white;
+
+  --background-morning: linear-gradient(
+    180deg,
+    lightblue,
+    skyblue,
+    hsl(211, 99%, 57%)
+  );
+  --background-noon: linear-gradient(
+    180deg,
+    hsl(199, 100%, 71%),
+    hsl(199, 100%, 65%),
+    hsl(199, 100%, 58%),
+    hsl(199, 100%, 50%)
+  );
+  --background-afternoon: linear-gradient(
+    180deg,
+    hsl(54, 100%, 86%),
+    hsl(40, 94%, 67%),
+    hsl(38, 94%, 56%),
+    hsl(38, 94%, 56%)
+  );
+  --background-evening: linear-gradient(
+    180deg,
+    hsl(49, 100%, 73%),
+    hsl(38, 99%, 66%),
+    hsl(13, 100%, 70%),
+    hsl(5, 98%, 65%)
+  );
+
+  --background-night: black;
+
+  --sun-diameter: calc(var(--clock-effect-container-diameter) / 10);
+  --sun-spred-value: calc(var(--sun-diameter) / 0.6);
+  --sun-color: hsl(39 100% 50% / 1);
+  --sun-brightness-present: 115%;
+
+  --moon-diameter: calc(var(--sun-diameter) / 2);
+  --moon--shadow-diameter: calc(var(--moon-diameter) / 1.5);
+  --moon-crest-diameter: calc(var(--moon-diameter) / 10);
+  --moon-spred-value: calc(var(--moon-diameter) / 2.5);
+  --moon-color: hsl(0 0% 75% / 0.8);
+  --moon-brightness-present: 325%;
+}
+
+/* to change the default clock size: */
+/* :root {
+  --clock-effect-container-diameter: 25vmin;
+} */
+
+.clock {
+  width: var(--clock-effect-container-diameter);
+  height: calc(var(--clock-effect-container-diameter) / 2);
+
+  border-radius: var(--clock-border-redius);
+  font-size: var(--clock-font-size);
+
+  user-select: none; /* prevent text selection */
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.day {
+  color: var(--clock-daytime-font-color);
+}
+
+.night {
+  color: var(--clock-nightime-font-color);
+  background: var(--background-night);
+}
+
+.night::after {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.clock > p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  min-width: 0;
+  min-height: 0;
+
+  text-align: center;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.container {
+  width: var(--clock-effect-container-diameter);
+  height: var(--clock-effect-container-diameter);
+
+  z-index: 1;
+
+  position: relative;
+  isolation: isolate;
+
+  transition: transform 250ms ease-in-out;
+}
+
+.sun,
+.moon {
+  position: absolute;
+  inset-block: 50%;
+
+  border-radius: 100%;
+
+  transform: translateY(-50%);
+}
+
+.sun {
+  width: var(--sun-diameter);
+  height: var(--sun-diameter);
+
+  left: 0;
+
+  background-color: var(--sun-color);
+
+  filter: drop-shadow(0 0 var(--sun-spred-value) var(--sun-color))
+    brightness(var(--sun-brightness-present));
+}
+
+.moon {
+  width: var(--moon-diameter);
+  height: var(--moon-diameter);
+
+  right: 0;
+
+  background-color: transparent;
+
+  box-shadow: inset var(--moon-crest-diameter) var(--moon-crest-diameter) 0
+    var(--moon-crest-diameter) var(--moon-color); /* to make a cressent saped moon */
+
+  filter: drop-shadow(0 0 var(--moon-spred-value) var(--moon-color))
+    brightness(var(--moon-brightness-present));
+
+  transform: rotateZ(-90deg);
+  transform-style: preserve-3d;
+}

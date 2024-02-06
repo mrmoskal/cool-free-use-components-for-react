@@ -1,0 +1,24 @@
+.container {
+    --angle: 5deg;
+    --color1: rgb(12, 20, 45);
+    --color2: rgb(28, 37, 64);
+    --color3: rgb(57, 79, 106);
+
+    padding-block: 2rem;
+    width: 100vw;
+
+    position: relative;
+    isolation: isolate;
+}
+
+.container::after{
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    transform: skewY(var(--angle));
+
+    background-image: linear-gradient(var(--angle), var(--color1), var(--color2), var(--color3));
+    z-index: -1;
+}

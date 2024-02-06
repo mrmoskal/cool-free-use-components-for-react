@@ -1,0 +1,115 @@
+:root {
+  --card-height: min(75vh, 100vw);
+  --card-width: calc(var(--card-height) / 1.5);
+
+  --timing: 450ms;
+}
+
+.container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: var(--card-width);
+  height: var(--card-height);
+
+  position: relative;
+  perspective: 1000px;
+
+  isolation: isolate;
+}
+
+img {
+  pointer-events: none;
+  position: absolute;
+  transition: all var(--timing) ease;
+}
+
+.card_bg {
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+  position: absolute;
+  transition: all var(--timing) ease;
+
+  transform: rotateX(0);
+}
+
+.card_bg_img {
+  width: inherit;
+  height: inherit;
+
+  inset: 0;
+
+  object-fit: cover;
+
+  z-index: 1;
+}
+
+.card_bg::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image: radial-gradient(
+    circle,
+    transparent 150px,
+    hsl(0 0% 0% / 0.5)
+  );
+
+  opacity: 0;
+  z-index: 2;
+  transition: all var(--timing) ease;
+}
+
+.container:hover > .card_bg {
+  box-shadow: 0 2rem 1rem hsl(0 0% 0% / 0.75);
+}
+
+.container:hover > .card_bg {
+  transform: rotateX(45deg);
+}
+
+.container:hover > .card_bg::before {
+  opacity: 1;
+}
+
+.card_profile_img {
+  margin-inline: auto;
+  bottom: 5%;
+
+  width: 100%;
+  height: 75%;
+
+  object-fit: fill;
+
+  opacity: 0;
+  transform: translateY(0);
+
+  z-index: 10;
+}
+
+.container:hover > .card_profile_img {
+  opacity: 1;
+  transform: translateY(-40%);
+}
+
+.card_title_img {
+  margin-inline: auto;
+  bottom: 0;
+
+  width: 75%;
+  height: 30%;
+
+  object-fit: fill;
+
+  transform: translateY(0);
+  z-index: 100;
+}
+
+.container:hover > .card_title_img {
+  transform: translateY(-35%);
+}
