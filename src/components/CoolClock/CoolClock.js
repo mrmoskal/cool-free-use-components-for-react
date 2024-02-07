@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import styles from "./CoolClock.module.css";
 
-export default function CoolClock() {
+export default function CoolClock({ widthValue = 50, widthParam = "vmin" }) {
   // vars with useMemo =>
   const daytimeBackgrounds = useMemo(() => {
     const getBackgroundPropertyFormat = (backgroundType) =>
@@ -77,6 +77,16 @@ export default function CoolClock() {
   );
   const [effectRotationDeg, setEffectRotationDeg] = useState(`${0}deg`);
   const [effectContainerClasses, setEffectContainerClasses] = useState("");
+
+  // functions =>
+  function setComponentSize(widthValue, widthParam) {
+    document
+      .querySelector(":root")
+      .style.setProperty(
+        "--clock-effect-container-diameter",
+        `${widthValue}${widthParam}`
+      );
+  }
 
   // useEffect with functions inside the callback
   useEffect(() => {
@@ -206,26 +216,56 @@ export default function CoolClock() {
           timeRanges,
           daytimeOffset
         ) => {
+          const nightOffset = 4, // to signify what daytime offset is night
+            maxDayFullTimeSec = 24 * 3600; // the max amount of time in a day (in seconds)
+
           const normalizedTime = Math.max(
             0,
-            Math.min(timeInSeconds, 60 * 60 * 24)
+            Math.min(timeInSeconds, maxDayFullTimeSec)
           ); // to make sure to stay within 0-24 hours (in seconds)
 
-          const totalTimeRange = Math.abs(
-            timeRanges[daytimeOffset].startSec -
-              timeRanges[daytimeOffset].endSec
-          ); // total seconds in the current time range
+          let totalTimeRange, mappedAngle;
 
-          let timeRangeStart = timeRanges[daytimeOffset].startSec;
-          if (timeRanges[daytimeOffset].startSac > normalizedTime) {
-            timeRangeStart = 0;
+          if (daytimeOffset !== nightOffset) {
+            // daytime =>
+            totalTimeRange = Math.abs(
+              timeRanges[daytimeOffset].startSec -
+                timeRanges[daytimeOffset].endSec
+            ); // range calculation day
+
+            // map time to angle
+            mappedAngle =
+              ((normalizedTime - timeRanges[daytimeOffset].startSec) /
+                totalTimeRange) *
+                (endDegree - startDegree) +
+              startDegree;
+          } else {
+            // night time =>
+            // set correct time range
+            let timeRangeStart =
+              timeRanges[daytimeOffset].startSec > normalizedTime
+                ? 0
+                : timeRanges[daytimeOffset].startSec;
+            let timeRangeEnd =
+              timeRanges[daytimeOffset].endSec < timeRangeStart
+                ? maxDayFullTimeSec
+                : timeRanges[daytimeOffset].endSec;
+
+            totalTimeRange = Math.abs(timeRangeStart - timeRangeEnd); // range calculation day
+
+            // set correct angle
+            let midnightAngle = startDegree + (endDegree - startDegree) / 2;
+
+            timeRangeStart < timeRanges[daytimeOffset].startSec
+              ? (startDegree = midnightAngle)
+              : (endDegree = midnightAngle);
+
+            // map time to angle
+            mappedAngle =
+              ((normalizedTime - timeRangeStart) / totalTimeRange) *
+                (endDegree - startDegree) +
+              startDegree;
           }
-
-          // map time to angle
-          const mappedAngle =
-            ((normalizedTime - timeRangeStart) / totalTimeRange) *
-              (endDegree - startDegree) +
-            startDegree;
 
           return mappedAngle; // just to make the new angle a non-floating number
         };
@@ -279,6 +319,12 @@ export default function CoolClock() {
             : null
         } // if effectContainerClasses it's day time - set curr daytime background
       >
+        {
+          setComponentSize(
+            widthValue,
+            widthParam
+          ) /* invoke size of component setter */
+        }
         <div
           className={styles.container}
           style={{ transform: `rotateZ(${effectRotationDeg})` }}
@@ -292,15 +338,33 @@ export default function CoolClock() {
       {/* debug stuff: */}
       <br />
       <h1>Debug Stuff (not realy needed in the component)</h1>
-      <p style={{ textAlign: "left", width: "50vw" }}>
+      <p
+        style={{
+          textAlign: "left",
+          width: "100vw",
+          paddingLeft: "35%",
+        }}
+      >
         <b>background (variable):</b>
         {` ${daytimeBackgroundColor}`}
       </p>
-      <p style={{ textAlign: "left", width: "50vw" }}>
+      <p
+        style={{
+          textAlign: "left",
+          width: "100vw",
+          paddingLeft: "35%",
+        }}
+      >
         <b>classes:</b>
         {` ${styles.clock} ${effectContainerClasses}`}
       </p>
-      <p style={{ textAlign: "left", width: "50vw" }}>
+      <p
+        style={{
+          textAlign: "left",
+          width: "100vw",
+          paddingLeft: "35%",
+        }}
+      >
         <b>transform:</b>
         {` rotateZ(${effectRotationDeg})`}
       </p>
