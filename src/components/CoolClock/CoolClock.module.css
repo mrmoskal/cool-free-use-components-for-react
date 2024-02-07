@@ -109,7 +109,7 @@
   position: relative;
   isolation: isolate;
 
-  transition: transform 350ms cubic-bezier(1, -1.28, 0, 2.11);
+  transition: transform 250ms ease-in-out;
 }
 
 .sun,

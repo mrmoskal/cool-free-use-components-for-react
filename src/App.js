@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header ">
-        <CoolClock widthValue={25} widthParam="vmin" />
+        <CoolClock widthValue={40} widthParam="vmax" />
       </header>
     </div>
   );
