@@ -63,7 +63,7 @@ export default function NavBar({ currPage = 0 }) {
         }
       >
         <div className={styles.content}>
-          <CoolClockNavbarVersion
+          <CoolClock
             className={styles.clock}
             widthValue={clockWidthSetting?.clockWidthValue}
             widthParam={clockWidthSetting?.clockWidthParam}
@@ -101,67 +101,33 @@ export default function NavBar({ currPage = 0 }) {
         <div className={styles.dropdown}>
           <ul className={styles.links}>
             <li className={styles.prev2}>
-              <Link
-                to={
-                  links[linkOffset - 2 < 0 ? links.length - 2 : linkOffset - 2]
-                    .link
-                }
-              >
-                {
-                  links[linkOffset - 2 < 0 ? links.length - 2 : linkOffset - 2]
-                    .text
-                }
+              <Link to={links[Math.abs((linkOffset - 2) % links.length)].link}>
+                {links[Math.abs((linkOffset - 2) % links.length)].text}
               </Link>
             </li>
             <li className={styles.prev}>
-              <Link
-                to={
-                  links[linkOffset - 1 < 0 ? links.length - 1 : linkOffset - 1]
-                    .link
-                }
-              >
-                {
-                  links[linkOffset - 1 < 0 ? links.length - 1 : linkOffset - 1]
-                    .text
-                }
+              <Link to={links[Math.abs((linkOffset - 1) % links.length)].link}>
+                {links[Math.abs((linkOffset - 1) % links.length)].text}
               </Link>
             </li>
             <li className={styles.current}>
               <Link to={links[linkOffset].link}>{links[linkOffset].text}</Link>
             </li>
             <li className={styles.next}>
-              <Link
-                to={
-                  links[linkOffset + 1 > links.length - 1 ? 0 : linkOffset + 1]
-                    .link
-                }
-              >
-                {
-                  links[linkOffset + 1 > links.length - 1 ? 0 : linkOffset + 1]
-                    .text
-                }
+              <Link to={links[Math.abs((linkOffset + 1) % links.length)].link}>
+                {links[Math.abs((linkOffset + 1) % links.length)].text}
               </Link>
             </li>
             <li className={styles.next2}>
-              <Link
-                to={
-                  links[linkOffset + 2 > links.length - 1 ? 1 : linkOffset + 2]
-                    .link
-                }
-              >
-                {
-                  links[linkOffset + 2 > links.length - 1 ? 1 : linkOffset + 2]
-                    .text
-                }
+              <Link to={links[Math.abs((linkOffset + 2) % links.length)].link}>
+                {links[Math.abs((linkOffset + 2) % links.length)].text}
               </Link>
             </li>
           </ul>
           <button
             className={`${styles.linkBtn} ${styles.next}`}
             onClick={() => {
-              setLinkOffset(() =>
-                linkOffset + 1 > links.length - 1 ? 0 : linkOffset + 1
-              );
+              setLinkOffset(Math.abs((linkOffset + 1) % links.length));
             }}
           >
             ►
@@ -169,9 +135,7 @@ export default function NavBar({ currPage = 0 }) {
           <button
             className={`${styles.linkBtn} ${styles.prev}`}
             onClick={() => {
-              setLinkOffset(() =>
-                linkOffset - 1 < 0 ? links.length - 1 : linkOffset - 1
-              );
+              setLinkOffset(Math.abs((linkOffset - 1) % links.length));
             }}
           >
             ◄
