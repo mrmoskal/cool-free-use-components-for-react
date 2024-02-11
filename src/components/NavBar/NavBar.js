@@ -101,13 +101,41 @@ export default function NavBar({ currPage = 0 }) {
         <div className={styles.dropdown}>
           <ul className={styles.links}>
             <li className={styles.prev2}>
-              <Link to={links[Math.abs((linkOffset - 2) % links.length)].link}>
-                {links[Math.abs((linkOffset - 2) % links.length)].text}
+              <Link
+                to={
+                  links[
+                    (linkOffset - 2) % links.length < 0
+                      ? links.length + ((linkOffset - 2) % links.length)
+                      : linkOffset - 2
+                  ].link
+                }
+              >
+                {
+                  links[
+                    (linkOffset - 2) % links.length < 0
+                      ? links.length + ((linkOffset - 2) % links.length)
+                      : linkOffset - 2
+                  ].text
+                }
               </Link>
             </li>
             <li className={styles.prev}>
-              <Link to={links[Math.abs((linkOffset - 1) % links.length)].link}>
-                {links[Math.abs((linkOffset - 1) % links.length)].text}
+              <Link
+                to={
+                  links[
+                    (linkOffset - 1) % links.length < 0
+                      ? links.length - 1
+                      : linkOffset - 1
+                  ].link
+                }
+              >
+                {
+                  links[
+                    (linkOffset - 1) % links.length < 0
+                      ? links.length - 1
+                      : linkOffset - 1
+                  ].text
+                }
               </Link>
             </li>
             <li className={styles.current}>
