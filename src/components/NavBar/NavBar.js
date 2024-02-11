@@ -11,6 +11,7 @@ export default function NavBar({ currPage = 0 }) {
     { link: "/#", text: "Page 2" },
     { link: "/#", text: "Page 3" },
     { link: "/#", text: "Page 4" },
+    { link: "/#", text: "Page 5" },
   ]; // all links & names for all pages in your site
 
   // vars with usState() =>
