@@ -1,0 +1,392 @@
+:root {
+  --component-height: 10vmin; /* for both nav bar and clock */
+
+  --burger-deameter: calc(
+    var(--component-height) * 0.75
+  ); /* for the navbar btn that will show navigation options */
+  --burger-border-redius: 100%;
+  --burger-background: radial-gradient(lightgrey, darkgray, grey);
+  --burger-text-color: black;
+
+  --navbar-height: calc(var(--component-height) * 2);
+  --navbar-width: calc(var(--navbar-height) + var(--burger-deameter) * 2);
+  --navbar-padding: calc(var(--navbar-height) * 0.25);
+
+  --navbar-children-inseting-spred: calc(var(--navbar-padding) * 0.35);
+  --navbar-children-inseting-color: black;
+
+  --navbar-background: linear-gradient(180deg, lightgrey, darkgray, gray);
+  --navbar-borber-radius: calc(var(--navbar-height) / 2);
+
+  --navbar-transition-val: 250ms;
+  --navbar-transition-special-func: cubic-bezier(1, -0.61, 0, 1.61);
+
+  --font-size-diameter: calc(var(--burger-deameter) * 0.5);
+
+  --link-width: 30%;
+}
+
+.fullCowling {
+  width: 100vw;
+  height: 100vh;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: hsl(0 0% 0% / 0.75);
+
+  z-index: 5;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.oneHundredPresent {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.container {
+  width: calc(var(--navbar-width) + var(--navbar-padding));
+  height: calc(var(--component-height) + var(--navbar-padding) * 2);
+
+  padding-inline: var(--navbar-padding);
+  padding-top: var(--navbar-padding);
+
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  transform: translateX(calc(-25% - var(--navbar-padding))) translateY(-16.5%);
+
+  z-index: 10;
+  isolation: isolate;
+
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.container.closed {
+  transform: translateX(calc(-25% - var(--navbar-padding))) translateY(-76.5%);
+}
+
+.container.clicked {
+  right: 50%;
+  transform: translateX(50%) translateY(-16.5%);
+}
+
+.content {
+  width: calc(var(--navbar-width) + var(--navbar-padding));
+  height: calc(var(--component-height) + var(--navbar-padding) * 2);
+  padding-inline: var(--navbar-padding);
+  padding-top: var(--navbar-padding);
+
+  border-radius: 0 0 var(--navbar-borber-radius) var(--navbar-borber-radius);
+
+  position: fixed;
+  top: 0;
+  right: 0;
+
+  display: grid;
+  grid-template-areas:
+    "clock burger"
+    "toggle-btn toggle-btn";
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--navbar-padding) * 0.1);
+
+  background: var(--navbar-background);
+
+  overflow: hidden;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.container > .content > *:not(.toggleBtn, .dropdown) {
+  box-shadow: inset 0 0 var(--navbar-children-inseting-spred)
+    var(--navbar-children-inseting-color);
+}
+
+.container.clicked > .content {
+  box-shadow: 0 0 var(--navbar-children-inseting-spred)
+    var(--navbar-children-inseting-color);
+}
+
+.container.clicked > .content > .toggleBtn {
+  opacity: 0;
+  cursor: default;
+}
+
+.container.clicked > .content > .toggleBtn:hover {
+  background-color: transparent;
+}
+
+.clock {
+  grid-area: clock; /* for position on navbar grid */
+
+  font-weight: lighter;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.toggleBtn {
+  grid-area: toggle-btn; /* for position on navbar grid */
+
+  width: calc(var(--burger-deameter) * 4);
+  height: var(--navbar-padding);
+
+  margin: auto;
+
+  background: transparent;
+  border: none;
+  border-radius: var(--navbar-borber-radius);
+
+  font-size: var(--font-size-diameter);
+
+  text-align: center;
+  vertical-align: middle;
+  line-height: var(--font-size-diameter);
+
+  opacity: 1;
+  cursor: pointer;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.toggleBtn:hover {
+  background-color: hsl(0 0% 0% / 0.25);
+}
+
+.burger {
+  width: var(--burger-deameter);
+  height: var(--burger-deameter);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--burger-text-color);
+
+  border-radius: var(--burger-border-redius);
+  border: none;
+
+  background: var(--burger-background);
+
+  grid-area: burger; /* for position on navbar grid */
+
+  cursor: pointer;
+  transition: all var(--navbar-transition-val)
+    var(--navbar-transition-special-func);
+}
+
+.burger > span {
+  width: var(--font-size-diameter);
+  height: var(--font-size-diameter);
+
+  font-size: var(--font-size-diameter);
+
+  text-align: center;
+  vertical-align: middle;
+  line-height: var(--font-size-diameter);
+
+  display: inline-block;
+  position: relative;
+
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+  transition: all var(--navbar-transition-val)
+    var(--navbar-transition-special-func);
+}
+
+.burger::after,
+.burger::before {
+  content: "";
+
+  width: var(--font-size-diameter);
+  height: calc(var(--font-size-diameter) * 0.1);
+
+  display: block;
+  position: absolute;
+
+  background-color: var(--burger-text-color);
+
+  opacity: 0;
+  z-index: 1;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.burger::before {
+  transform: rotateZ(-45deg);
+}
+
+.burger::after {
+  transform: rotateZ(45deg);
+}
+
+.burger.clicked {
+  transform: rotateZ(180deg); /* hide fadding effect */
+}
+
+.burger.clicked > span {
+  opacity: 0;
+}
+
+.burger.clicked::after,
+.burger.clicked::before {
+  opacity: 1;
+}
+
+.dropdown {
+  width: calc(var(--navbar-width) + var(--navbar-padding));
+  height: calc(var(--navbar-width) + var(--navbar-padding));
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: var(--navbar-background);
+
+  border-radius: 100%;
+
+  transform: scale(0) translateY(-25%) rotateZ(-180deg);
+
+  overflow: hidden;
+  z-index: -1;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.container.clicked > .dropdown {
+  transform: scale(1.5) translateY(-25%) rotateZ(0);
+}
+
+.links {
+  width: calc(var(--navbar-width) + var(--navbar-padding));
+  height: calc(var(--navbar-width) + var(--navbar-padding));
+
+  list-style: none;
+
+  position: relative;
+}
+
+.dropdown > p {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  font-size: calc(var(--font-size-diameter) * 0.4);
+  color: var(--burger-text-color);
+
+  transform: translate(-50%, -75%);
+}
+
+.links > .current,
+.links > .next,
+.links > .next2,
+.links > .prev,
+.links > .prev2 {
+  width: var(--link-width);
+  height: calc(var(--link-width) / 2);
+
+  position: absolute;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: var(--navbar-borber-radius);
+
+  background-color: hsl(0 0% 0% / 0);
+
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.links > .current:hover {
+  background-color: hsl(0 0% 0% / 0.15);
+}
+
+.links > .next:hover,
+.links > .next2:hover,
+.links > .prev:hover,
+.links > .prev2:hover {
+  background-color: hsl(0 0% 0% / 0.125);
+}
+
+.links > .current > * {
+  font-size: calc(var(--font-size-diameter) * 0.5);
+  text-decoration: underline;
+  color: hsl(0 0% 0% / 0.85);
+}
+
+.links > .next > *,
+.links > .next2 > *,
+.links > .prev > *,
+.links > .prev2 > * {
+  font-size: calc(var(--font-size-diameter) * 0.5);
+  text-decoration: underline;
+  color: hsl(0 0% 0% / 0.7);
+}
+
+.links > .current {
+  bottom: 0;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.links > .prev {
+  bottom: 0;
+  left: 0;
+
+  transform: translate(20%, -90%) rotateZ(41deg) scale(65%);
+}
+
+.links > .prev2 {
+  top: 70%;
+  left: 0;
+
+  transform: translate(-20%, -130%) rotateZ(87deg) scale(65%);
+}
+
+.links > .next {
+  bottom: 0;
+  right: 0;
+
+  transform: translate(-20%, -90%) rotateZ(-41deg) scale(70%);
+}
+
+.links > .next2 {
+  top: 70%;
+  right: 0;
+
+  transform: translate(20%, -130%) rotateZ(-87deg) scale(70%);
+}
+
+.linkBtn {
+  width: calc(var(--link-width) / 2);
+  height: calc(var(--link-width) / 2);
+
+  position: absolute;
+  bottom: 0;
+
+  border-radius: 100%;
+  border: none;
+
+  background-color: transparent;
+
+  font-size: calc(var(--font-size-diameter) * 0.5);
+
+  transform: translate(-50%, 15%);
+
+  cursor: pointer;
+  transition: all var(--navbar-transition-val) ease-in-out;
+}
+
+.linkBtn:hover {
+  background-color: hsl(0 0% 50% / 0.75);
+}
+
+.linkBtn.next {
+  left: calc(50% + var(--link-width) - 15%);
+}
+
+.linkBtn.prev {
+  left: calc(50% - var(--link-width) + 15%);
+}

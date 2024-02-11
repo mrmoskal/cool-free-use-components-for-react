@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import styles from "./CoolClock.module.css";
+import styles from "./CoolClockNavbarVersion.module.css";
 
 export default function CoolClock({ widthValue = 50, widthParam = "vmin" }) {
   // vars with useMemo =>
@@ -83,7 +83,7 @@ export default function CoolClock({ widthValue = 50, widthParam = "vmin" }) {
     document
       .querySelector(":root")
       .style.setProperty(
-        "--cool-clock-effect-container-diameter",
+        "--clock-effect-container-diameter",
         `${widthValue}${widthParam}`
       );
   }
@@ -310,64 +310,28 @@ export default function CoolClock({ widthValue = 50, widthParam = "vmin" }) {
 
   // final component to be rendered =>
   return (
-    <>
+    <div
+      className={`${styles.clock} ${effectContainerClasses}`}
+      style={
+        effectContainerClasses === styles.day
+          ? { background: daytimeBackgroundColor }
+          : null
+      } // if effectContainerClasses it's day time - set curr daytime background
+    >
+      {
+        setComponentSize(
+          widthValue,
+          widthParam
+        ) /* invoke size of component setter */
+      }
       <div
-        className={`${styles.clock} ${effectContainerClasses}`}
-        style={
-          effectContainerClasses === styles.day
-            ? { background: daytimeBackgroundColor }
-            : null
-        } // if effectContainerClasses it's day time - set curr daytime background
+        className={styles.container}
+        style={{ transform: `rotateZ(${effectRotationDeg})` }}
       >
-        {
-          setComponentSize(
-            widthValue,
-            widthParam
-          ) /* invoke size of component setter */
-        }
-        <div
-          className={styles.container}
-          style={{ transform: `rotateZ(${effectRotationDeg})` }}
-        >
-          <div className={styles.sun}></div>
-          <div className={styles.moon}></div>
-        </div>
-        <p>{showTime ?? "system time could not be retrieved"}</p>
+        <div className={styles.sun}></div>
+        <div className={styles.moon}></div>
       </div>
-
-      {/* debug stuff: */}
-      <br />
-      <h1>Debug Stuff (not realy needed in the component)</h1>
-      <p
-        style={{
-          textAlign: "left",
-          width: "100vw",
-          paddingLeft: "35%",
-        }}
-      >
-        <b>background (variable):</b>
-        {` ${daytimeBackgroundColor}`}
-      </p>
-      <p
-        style={{
-          textAlign: "left",
-          width: "100vw",
-          paddingLeft: "35%",
-        }}
-      >
-        <b>classes:</b>
-        {` ${styles.clock} ${effectContainerClasses}`}
-      </p>
-      <p
-        style={{
-          textAlign: "left",
-          width: "100vw",
-          paddingLeft: "35%",
-        }}
-      >
-        <b>transform:</b>
-        {` rotateZ(${effectRotationDeg})`}
-      </p>
-    </>
+      <p>{showTime ?? "system time could not be retrieved"}</p>
+    </div>
   );
 }

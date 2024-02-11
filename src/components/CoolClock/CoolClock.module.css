@@ -1,31 +1,35 @@
 :root {
-  --clock-effect-container-diameter: 50vmin; /* default size of colck */
-  --clock-border-redius: calc(var(--clock-effect-container-diameter) / 4.75);
-  --clock-font-size: calc(var(--clock-effect-container-diameter) / 13.5);
-  --clock-daytime-font-color: black;
-  --clock-nightime-font-color: white;
+  --cool-clock-effect-container-diameter: 50vmin; /* default size of colck */
+  --cool-clock-border-redius: calc(
+    var(--cool-clock-effect-container-diameter) / 4.75
+  );
+  --cool-clock-font-size: calc(
+    var(--cool-clock-effect-container-diameter) / 13.5
+  );
+  --cool-clock-daytime-font-color: black;
+  --cool-clock-nightime-font-color: white;
 
-  --background-morning: linear-gradient(
+  --cool-background-morning: linear-gradient(
     180deg,
     lightblue,
     skyblue,
     hsl(211, 99%, 57%)
   );
-  --background-noon: linear-gradient(
+  --cool-background-noon: linear-gradient(
     180deg,
     hsl(199, 100%, 71%),
     hsl(199, 100%, 65%),
     hsl(199, 100%, 58%),
     hsl(199, 100%, 50%)
   );
-  --background-afternoon: linear-gradient(
+  --cool-background-afternoon: linear-gradient(
     180deg,
     hsl(54, 100%, 86%),
     hsl(40, 94%, 67%),
     hsl(38, 94%, 56%),
     hsl(38, 94%, 56%)
   );
-  --background-evening: linear-gradient(
+  --cool-background-evening: linear-gradient(
     180deg,
     hsl(49, 100%, 73%),
     hsl(38, 99%, 66%),
@@ -33,19 +37,19 @@
     hsl(5, 98%, 65%)
   );
 
-  --background-night: black;
+  --cool-background-night: black;
 
-  --sun-diameter: calc(var(--clock-effect-container-diameter) / 10);
-  --sun-spred-value: calc(var(--sun-diameter) / 3);
-  --sun-color: hsl(39 100% 50% / 1);
-  --sun-brightness-present: 115%;
+  --cool-sun-diameter: calc(var(--cool-clock-effect-container-diameter) / 10);
+  --cool-sun-spred-value: calc(var(--cool-sun-diameter) / 3);
+  --cool-sun-color: hsl(39 100% 50% / 1);
+  --cool-sun-brightness-present: 115%;
 
-  --moon-diameter: calc(var(--sun-diameter) / 2);
-  --moon--shadow-diameter: calc(var(--moon-diameter) / 1.5);
-  --moon-crest-diameter: calc(var(--moon-diameter) / 10);
-  --moon-spred-value: calc(var(--moon-diameter) / 2.5);
-  --moon-color: hsl(0 0% 75% / 0.8);
-  --moon-brightness-present: 325%;
+  --cool-moon-diameter: calc(var(--cool-sun-diameter) / 2);
+  --cool-moon-shadow-diameter: calc(var(--cool-moon-diameter) / 1.5);
+  --cool-moon-crest-diameter: calc(var(--cool-moon-diameter) / 10);
+  --cool-moon-spred-value: calc(var(--cool-moon-diameter) / 2.5);
+  --cool-moon-color: hsl(0 0% 75% / 0.8);
+  --cool-moon-brightness-present: 325%;
 }
 
 /* to change the default clock size: */
@@ -54,11 +58,11 @@
 } */
 
 .clock {
-  width: var(--clock-effect-container-diameter);
-  height: calc(var(--clock-effect-container-diameter) / 2);
+  width: var(--cool-clock-effect-container-diameter);
+  height: calc(var(--cool-clock-effect-container-diameter) / 2);
 
-  border-radius: var(--clock-border-redius);
-  font-size: var(--clock-font-size);
+  border-radius: var(--cool-clock-border-redius);
+  font-size: var(--cool-clock-font-size);
 
   user-select: none; /* prevent text selection */
 
@@ -68,12 +72,12 @@
 }
 
 .day {
-  color: var(--clock-daytime-font-color);
+  color: var(--cool-clock-daytime-font-color);
 }
 
 .night {
-  color: var(--clock-nightime-font-color);
-  background: var(--background-night);
+  color: var(--cool-clock-nightime-font-color);
+  background: var(--cool-background-night);
 }
 
 .night::after {
@@ -101,8 +105,8 @@
 }
 
 .container {
-  width: var(--clock-effect-container-diameter);
-  height: var(--clock-effect-container-diameter);
+  width: var(--cool-clock-effect-container-diameter);
+  height: var(--cool-clock-effect-container-diameter);
 
   z-index: 1;
 
@@ -123,30 +127,31 @@
 }
 
 .sun {
-  width: var(--sun-diameter);
-  height: var(--sun-diameter);
+  width: var(--cool-sun-diameter);
+  height: var(--cool-sun-diameter);
 
   left: 0;
 
-  background-color: var(--sun-color);
+  background-color: var(--cool-sun-color);
 
-  filter: drop-shadow(0 0 var(--sun-spred-value) var(--sun-color))
-    brightness(var(--sun-brightness-present));
+  filter: drop-shadow(0 0 var(--cool-sun-spred-value) var(--cool-sun-color))
+    brightness(var(--cool-sun-brightness-present));
 }
 
 .moon {
-  width: var(--moon-diameter);
-  height: var(--moon-diameter);
+  width: var(--cool-moon-diameter);
+  height: var(--cool-moon-diameter);
 
   right: 0;
 
   background-color: transparent;
 
-  box-shadow: inset var(--moon-crest-diameter) var(--moon-crest-diameter) 0
-    var(--moon-crest-diameter) var(--moon-color); /* to make a cressent saped moon */
+  box-shadow: inset var(--cool-moon-crest-diameter)
+    var(--cool-moon-crest-diameter) 0 var(--cool-moon-crest-diameter)
+    var(--cool-moon-color); /* to make a cressent saped moon */
 
-  filter: drop-shadow(0 0 var(--moon-spred-value) var(--moon-color))
-    brightness(var(--moon-brightness-present));
+  filter: drop-shadow(0 0 var(--cool-moon-spred-value) var(--cool-moon-color))
+    brightness(var(--cool-moon-brightness-present));
 
   transform: rotateZ(-90deg);
   transform-style: preserve-3d;
