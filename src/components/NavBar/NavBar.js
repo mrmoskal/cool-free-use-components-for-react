@@ -63,7 +63,7 @@ export default function NavBar({ currPage = 0 }) {
         }
       >
         <div className={styles.content}>
-          <CoolClock
+          <CoolClockNavbarVersion
             className={styles.clock}
             widthValue={clockWidthSetting?.clockWidthValue}
             widthParam={clockWidthSetting?.clockWidthParam}
@@ -135,7 +135,11 @@ export default function NavBar({ currPage = 0 }) {
           <button
             className={`${styles.linkBtn} ${styles.prev}`}
             onClick={() => {
-              setLinkOffset(Math.abs((linkOffset - 1) % links.length));
+              setLinkOffset(
+                (linkOffset - 1) % links.length < 0
+                  ? links.length - 1
+                  : linkOffset - 1
+              );
             }}
           >
             ◄
